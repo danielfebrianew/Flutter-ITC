@@ -83,7 +83,8 @@ Widget _mainBody() {
                             Text('Phone : ${data?[index].phone}'),
                             Text('Website : ${data?[index].website}'),
                             Text(
-                                'Address : ${data?[index].address!.street}, ${data?[index].address!.suite}, ${data?[index].address!.city}'),
+                              'Address : ${data?[index].address!.street}, ${data?[index].address!.suite}, ${data?[index].address!.city}',
+                            ),
                           ],
                         ),
                         backgroundColor: Colors.amber.shade50,
