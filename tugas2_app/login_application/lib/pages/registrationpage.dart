@@ -1,22 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_application/homepage.dart';
-import 'package:login_application/primaryblack.dart';
-import 'package:login_application/registrationpage.dart';
+import 'package:login_application/pages/loginpage.dart';
+import 'package:login_application/colors/primaryblack.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-// ignore: camel_case_types
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool _obscureText = true;
 
   @override
@@ -37,9 +35,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
-                  _textMasuk(),
+                  _textDaftar(),
                   const SizedBox(
                     height: 50,
                   ),
@@ -49,13 +47,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   _passwordField(),
                   const SizedBox(
-                    height: 45,
-                  ),
-                  _loginButton(),
-                  const SizedBox(
                     height: 30,
                   ),
-                  _buttonDaftar(),
+                  _registerButton(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _loginButton(),
                 ],
               ),
             ),
@@ -65,16 +63,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _textMasuk() {
+  Widget _textDaftar() {
     return Container(
       alignment: Alignment.center,
       child: const Text(
-        'Masuk',
+        'Daftar',
         style: TextStyle(
           color: Color.fromRGBO(255, 163, 26, 1),
           fontSize: 45,
           fontFamily: 'Arial',
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.center,
       ),
@@ -85,16 +83,16 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       alignment: Alignment.center,
       child: TextFormField(
+        controller: _emailController,
         validator: validateEmail,
         enabled: true,
-        controller: _emailController,
+        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
         style: const TextStyle(
           color: Color.fromRGBO(255, 163, 26, 1),
         ),
-        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
         decoration: InputDecoration(
           icon: const Icon(
-            Icons.mail,
+            Icons.email,
             color: Color.fromRGBO(255, 163, 26, 1),
           ),
           focusedBorder: OutlineInputBorder(
@@ -104,7 +102,6 @@ class _LoginPageState extends State<LoginPage> {
               color: Color.fromRGBO(255, 163, 26, 1),
             ),
           ),
-          focusColor: Colors.white,
           filled: true,
           fillColor: const Color.fromARGB(255, 14, 14, 14),
           labelText: 'Email',
@@ -121,13 +118,13 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       alignment: Alignment.center,
       child: TextFormField(
+        controller: _passwordController,
         validator: validatePassword,
         enabled: true,
-        controller: _passwordController,
+        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
         style: const TextStyle(
           color: Color.fromRGBO(255, 163, 26, 1),
         ),
-        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
         obscureText: _obscureText,
         decoration: InputDecoration(
           icon: const Icon(
@@ -137,24 +134,26 @@ class _LoginPageState extends State<LoginPage> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              color: Color.fromRGBO(255, 163, 26, 1),
               width: 3,
+              color: Color.fromRGBO(255, 163, 26, 1),
             ),
           ),
           filled: true,
           fillColor: const Color.fromARGB(255, 14, 14, 14),
+          labelText: 'Password',
           suffixIcon: GestureDetector(
             onTap: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
+              setState(
+                () {
+                  _obscureText = !_obscureText;
+                },
+              );
             },
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: const Color.fromRGBO(255, 163, 26, 1),
             ),
           ),
-          labelText: 'Password',
           labelStyle: const TextStyle(
             color: Color.fromRGBO(255, 163, 26, 1),
           ),
@@ -164,22 +163,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginButton() {
+  Widget _registerButton() {
     return Container(
       alignment: Alignment.center,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: const Color.fromRGBO(255, 163, 26, 1),
-          onPrimary: Colors.black,
+          onPrimary: Colors.amber.shade50,
           shadowColor: Colors.orangeAccent,
           elevation: 3,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           minimumSize: const Size(90, 40),
         ),
         child: const Text(
-          'Masuk',
+          'Daftar',
           style: TextStyle(
+            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -187,21 +188,29 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () async {
           try {
             if (_key.currentState!.validate()) {
-              await _firebaseAuth
-                  .signInWithEmailAndPassword(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  )
-                  .then(
-                    (value) => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Homepage(),
-                      ),
-                    ),
-                  );
+              await _firebaseAuth.createUserWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text,
+              );
             }
-          } on Exception catch (e) {
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'weak-password') {
+              SnackBar snackBar = const SnackBar(
+                content: Text("The Password is too Weak!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else if (e.code == 'email-already-in-use') {
+              SnackBar snackBar = const SnackBar(
+                content: Text("The Email ALready Exist!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else if (e.code == 'invalid-email') {
+              SnackBar snackBar = const SnackBar(
+                content: Text("Kesalahan Penulisan Format Email!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          } catch (e) {
             SnackBar snackBar = SnackBar(
               content: Text("Error : $e"),
             );
@@ -213,14 +222,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buttonDaftar() {
+  Widget _loginButton() {
     return Container(
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'Belum punya akun?',
+            'Sudah memiliki akun?',
             style: TextStyle(
               color: Colors.white,
               fontSize: 15,
@@ -232,12 +241,12 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RegistrationPage(),
+                  builder: (context) => const LoginPage(),
                 ),
               );
             },
             child: const Text(
-              'Daftar',
+              'Masuk',
               style: TextStyle(
                 color: Color.fromRGBO(255, 163, 26, 1),
                 fontSize: 15,

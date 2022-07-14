@@ -1,21 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_application/loginpage.dart';
-import 'package:login_application/primaryblack.dart';
+import 'package:login_application/pages/homepage.dart';
+import 'package:login_application/colors/primaryblack.dart';
+import 'package:login_application/pages/registrationpage.dart';
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -34,9 +36,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
-                  _textDaftar(),
+                  _textMasuk(),
                   const SizedBox(
                     height: 50,
                   ),
@@ -46,13 +48,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   _passwordField(),
                   const SizedBox(
-                    height: 30,
-                  ),
-                  _registerButton(),
-                  const SizedBox(
-                    height: 20,
+                    height: 45,
                   ),
                   _loginButton(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  _buttonDaftar(),
                 ],
               ),
             ),
@@ -62,16 +64,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _textDaftar() {
+  Widget _textMasuk() {
     return Container(
       alignment: Alignment.center,
       child: const Text(
-        'Daftar',
+        'Masuk',
         style: TextStyle(
           color: Color.fromRGBO(255, 163, 26, 1),
           fontSize: 45,
           fontFamily: 'Arial',
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w700,
         ),
         textAlign: TextAlign.center,
       ),
@@ -82,16 +84,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Container(
       alignment: Alignment.center,
       child: TextFormField(
-        controller: _emailController,
         validator: validateEmail,
         enabled: true,
-        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
+        controller: _emailController,
         style: const TextStyle(
           color: Color.fromRGBO(255, 163, 26, 1),
         ),
+        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
         decoration: InputDecoration(
           icon: const Icon(
-            Icons.email,
+            Icons.mail,
             color: Color.fromRGBO(255, 163, 26, 1),
           ),
           focusedBorder: OutlineInputBorder(
@@ -101,6 +103,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               color: Color.fromRGBO(255, 163, 26, 1),
             ),
           ),
+          focusColor: Colors.white,
           filled: true,
           fillColor: const Color.fromARGB(255, 14, 14, 14),
           labelText: 'Email',
@@ -117,13 +120,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Container(
       alignment: Alignment.center,
       child: TextFormField(
-        controller: _passwordController,
         validator: validatePassword,
         enabled: true,
-        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
+        controller: _passwordController,
         style: const TextStyle(
           color: Color.fromRGBO(255, 163, 26, 1),
         ),
+        cursorColor: const Color.fromRGBO(255, 163, 26, 1),
         obscureText: _obscureText,
         decoration: InputDecoration(
           icon: const Icon(
@@ -133,26 +136,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              width: 3,
               color: Color.fromRGBO(255, 163, 26, 1),
+              width: 3,
             ),
           ),
           filled: true,
           fillColor: const Color.fromARGB(255, 14, 14, 14),
-          labelText: 'Password',
           suffixIcon: GestureDetector(
             onTap: () {
-              setState(
-                () {
-                  _obscureText = !_obscureText;
-                },
-              );
+              setState(() {
+                _obscureText = !_obscureText;
+              });
             },
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: const Color.fromRGBO(255, 163, 26, 1),
             ),
           ),
+          labelText: 'Password',
           labelStyle: const TextStyle(
             color: Color.fromRGBO(255, 163, 26, 1),
           ),
@@ -162,24 +163,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _registerButton() {
+  Widget _loginButton() {
     return Container(
       alignment: Alignment.center,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: const Color.fromRGBO(255, 163, 26, 1),
-          onPrimary: Colors.amber.shade50,
+          onPrimary: Colors.black,
           shadowColor: Colors.orangeAccent,
           elevation: 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           minimumSize: const Size(90, 40),
         ),
         child: const Text(
-          'Daftar',
+          'Masuk',
           style: TextStyle(
-            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -187,12 +186,34 @@ class _RegistrationPageState extends State<RegistrationPage> {
         onPressed: () async {
           try {
             if (_key.currentState!.validate()) {
-              await _firebaseAuth.createUserWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text,
-              );
+              await _firebaseAuth
+                  .signInWithEmailAndPassword(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  )
+                  .then(
+                    (value) => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Homepage(),
+                      ),
+                    ),
+                  );
             }
-          } on Exception catch (e) {
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              SnackBar snackBar = const SnackBar(
+                content: Text(
+                    "Login Failed! There are No Accounts for that E-mail!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else if (e.code == 'wrong-password') {
+              SnackBar snackBar = const SnackBar(
+                content: Text("Login Failed! Please Check Your Password!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          } catch (e) {
             SnackBar snackBar = SnackBar(
               content: Text("Error : $e"),
             );
@@ -204,14 +225,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget _loginButton() {
+  Widget _buttonDaftar() {
     return Container(
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'Sudah memiliki akun?',
+            'Belum punya akun?',
             style: TextStyle(
               color: Colors.white,
               fontSize: 15,
@@ -223,12 +244,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
+                  builder: (context) => const RegistrationPage(),
                 ),
               );
             },
             child: const Text(
-              'Masuk',
+              'Daftar',
               style: TextStyle(
                 color: Color.fromRGBO(255, 163, 26, 1),
                 fontSize: 15,

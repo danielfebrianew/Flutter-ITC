@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:login_application/loginpage.dart';
-import 'package:login_application/primaryblack.dart';
+import 'package:login_application/pages/loginpage.dart';
+import 'package:login_application/colors/primaryblack.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
