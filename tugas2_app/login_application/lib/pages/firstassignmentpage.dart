@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_application/api/api_services.dart';
 import 'package:login_application/user_model.dart';
-import 'package:login_application/widgets/search_widget.dart';
 
 class FirstAssignmentPage extends StatefulWidget {
   const FirstAssignmentPage({Key? key}) : super(key: key);
@@ -9,14 +8,6 @@ class FirstAssignmentPage extends StatefulWidget {
   @override
   State<FirstAssignmentPage> createState() => _FirstAssignmentPageState();
 }
-
-const TextStyle _textStyle = TextStyle(
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-  letterSpacing: 2,
-  fontStyle: FontStyle.italic,
-  color: Colors.black,
-);
 
 FetchUser _userList = FetchUser();
 
