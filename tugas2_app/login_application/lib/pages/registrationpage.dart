@@ -192,6 +192,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 email: _emailController.text,
                 password: _passwordController.text,
               );
+              SnackBar snackBar = const SnackBar(
+                content: Text("Register Success!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           } on FirebaseAuthException catch (e) {
             if (e.code == 'weak-password') {
@@ -201,7 +205,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else if (e.code == 'email-already-in-use') {
               SnackBar snackBar = const SnackBar(
-                content: Text("The Email ALready Exist!"),
+                content: Text("There is already an Account with this E-mail!"),
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else if (e.code == 'invalid-email') {

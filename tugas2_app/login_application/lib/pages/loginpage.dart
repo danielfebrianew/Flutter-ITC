@@ -199,12 +199,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   );
+              SnackBar snackBar = const SnackBar(
+                content: Text("Login Success!"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           } on FirebaseAuthException catch (e) {
             if (e.code == 'user-not-found') {
               SnackBar snackBar = const SnackBar(
                 content: Text(
-                    "Login Failed! There are No Accounts for that E-mail!"),
+                    "Login Failed! There are No Accounts with that E-mail!"),
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else if (e.code == 'wrong-password') {

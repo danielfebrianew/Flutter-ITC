@@ -28,6 +28,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               const SizedBox(height: 275),
               ElevatedButton(
                 onPressed: () {
+                  SnackBar snackBar = const SnackBar(
+                    content: Text("Logout Success!"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   _signOut().then((value) => Navigator.of(context)
                       .pushReplacement(MaterialPageRoute(
                           builder: (context) => const LoginPage())));
