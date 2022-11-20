@@ -31,10 +31,12 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: _bottomNavigationBar(),
       drawer: const NavigationDrawerWidget(),
       appBar: _appBar(),
-      body: Container(
-        alignment: Alignment.center,
-        color: primaryBlack,
-        child: pages[_currentIndex],
+      body: SafeArea(
+        child: Container(
+          alignment: Alignment.center,
+          color: primaryBlack,
+          child: pages[_currentIndex],
+        ),
       ),
     );
   }
@@ -52,7 +54,7 @@ class _HomepageState extends State<Homepage> {
         ),
       ),
       child: NavigationBar(
-        height: 90,
+        height: MediaQuery.of(context).size.height * 0.1,
         backgroundColor: Colors.black,
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: _currentIndex,

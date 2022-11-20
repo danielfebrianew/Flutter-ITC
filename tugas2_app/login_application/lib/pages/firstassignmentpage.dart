@@ -15,20 +15,21 @@ class _FirstAssignmentPageState extends State<FirstAssignmentPage> {
   String? query = "";
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        child: FutureBuilder<List<UserList>>(
-            future: _userList.getUserList(query),
-            builder: (context, snapshot) {
-              var data = snapshot.data;
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return ListView.builder(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
+      child: FutureBuilder<List<UserList>>(
+          future: _userList.getUserList(query),
+          builder: (context, snapshot) {
+            var data = snapshot.data;
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemCount: data?.length,
@@ -98,9 +99,9 @@ class _FirstAssignmentPageState extends State<FirstAssignmentPage> {
                     ),
                   );
                 },
-              );
-            }),
-      ),
+              ),
+            );
+          }),
     );
   }
 }

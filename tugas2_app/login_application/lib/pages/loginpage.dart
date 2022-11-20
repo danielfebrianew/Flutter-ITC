@@ -188,21 +188,23 @@ class _LoginPageState extends State<LoginPage> {
             if (_key.currentState!.validate()) {
               await _firebaseAuth
                   .signInWithEmailAndPassword(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  )
+                email: _emailController.text,
+                password: _passwordController.text,
+              )
                   .then(
-                    (value) => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Homepage(),
-                      ),
+                (value) {
+                  SnackBar snackBar = const SnackBar(
+                    content: Text("Login Success!"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Homepage(),
                     ),
                   );
-              SnackBar snackBar = const SnackBar(
-                content: Text("Login Success!"),
+                },
               );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           } on FirebaseAuthException catch (e) {
             if (e.code == 'user-not-found') {
